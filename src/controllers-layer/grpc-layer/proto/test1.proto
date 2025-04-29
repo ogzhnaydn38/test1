@@ -1,0 +1,28 @@
+
+syntax = "proto3";
+
+package test1;
+
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+
+
+
+
+
+message VoidRequest {}
+    
+message CurrentUserReply {
+    string userId = 1;
+}
+
+message HelloMessageReply {
+    string hello = 1;
+}
+
+service test1Service {
+
+
+    rpc currentUser(VoidRequest) returns (CurrentUserReply);
+    rpc helloMessage(VoidRequest) returns (HelloMessageReply);
+}
