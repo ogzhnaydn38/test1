@@ -77,9 +77,6 @@ const addSessionRoutes = () => {
   router.get("/permissions/:permissionName", async (req, res) => {
     try {
       const pName = req.params.permissionName;
-      if (!pName) {
-        res.status(400).send(":permissionName parameter required in path");
-      }
       if (req.auth) {
         console.log("asking for permission filter of:", pName);
         const pFilter = await req.auth.getPermissionFilter(pName);
@@ -146,9 +143,9 @@ const addLoginRoutes = () => {
   });
 };
 
-const getLoginServicesRouter = () => {
-  const loginServicesRouter = require("../login-services");
-  return loginServicesRouter;
+const getVerificationServicesRouter = () => {
+  const verificationServicesRouter = require("../verification-services");
+  return verificationServicesRouter;
 };
 
 const getSessionRouter = () => {
@@ -162,4 +159,8 @@ const getLoginRouter = () => {
   return router;
 };
 
-module.exports = { getSessionRouter, getLoginRouter, getLoginServicesRouter };
+module.exports = {
+  getSessionRouter,
+  getLoginRouter,
+  getVerificationServicesRouter,
+};

@@ -41,6 +41,7 @@ class HexaAuth {
   }
 
   async checkPermission(permissionName) {
+    if (!this.permissionManager) return false;
     return await this.permissionManager.checkPermissionForSession(
       permissionName,
       null,
@@ -48,6 +49,7 @@ class HexaAuth {
   }
 
   async checkObjectPermission(permissionName, objectId) {
+    if (!this.permissionManager) return false;
     return await this.permissionManager.checkPermissionForSession(
       permissionName,
       objectId,
@@ -55,6 +57,7 @@ class HexaAuth {
   }
 
   async getPermissions(permissionName, objectId) {
+    if (!this.permissionManager) return [];
     return await this.permissionManager.getPermissions(
       permissionName,
       objectId,
@@ -62,25 +65,31 @@ class HexaAuth {
   }
 
   async getRootPermissions(permissionName) {
+    if (!this.permissionManager) return [];
     return await this.permissionManager.getRootPermissions(permissionName);
   }
 
   async getObjectPermissions(permissionName) {
+    if (!this.permissionManager) return [];
     return await this.permissionManager.getObjectPermissions(permissionName);
   }
 
   async getAllowedObjects(permissionName) {
+    if (!this.permissionManager) return null;
     return await this.permissionManager.getAllowedObjects(permissionName);
   }
 
   async getPermissionFilter(permissionName) {
+    if (!this.permissionManager) return null;
     return await this.permissionManager.getPermissionFilter(permissionName);
   }
 
   async getCurrentUserPermissions() {
+    if (!this.permissionManager) return [];
     return await this.permissionManager.getCurrentUserPermissions();
   }
   async getCurrentRolePermissions() {
+    if (!this.permissionManager) return [];
     return await this.permissionManager.getCurrentRolePermissions();
   }
 

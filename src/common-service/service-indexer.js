@@ -5,10 +5,11 @@ const ServicePublisher = require("./service-publisher");
 const MAPPINGS = {};
 
 class ServiceIndexer extends ElasticIndexer {
-  constructor(indexName, session) {
+  constructor(indexName, session, requestId) {
     const serviceIndexName = "tickatme_" + indexName.toLowerCase();
     super(serviceIndexName, { mapping: MAPPINGS[indexName] });
     this.session = session;
+    this.requestId = requestId;
   }
 
   static addMapping(indexName, mapping) {
@@ -20,7 +21,12 @@ class ServiceIndexer extends ElasticIndexer {
   }
 
   async publishEvent(eventName, data) {
-    const publisher = new ServicePublisher(eventName, data, this.session);
+    const publisher = new ServicePublisher(
+      eventName,
+      data,
+      this.session,
+      this.requestId,
+    );
     return publisher.publish();
   }
 }

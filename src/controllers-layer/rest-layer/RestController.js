@@ -98,7 +98,12 @@ class RestController {
         this._res.cookie(
           this.apiManager.setCookie.cookieName,
           this.apiManager.setCookie.cookieValue,
-          { httpOnly: true, domain: process.env.COOKIE_URL },
+          {
+            httpOnly: true,
+            domain: process.env.COOKIE_URL,
+            sameSite: "None",
+            secure: true,
+          },
         );
       }
 

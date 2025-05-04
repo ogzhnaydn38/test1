@@ -1,5 +1,6 @@
 const { createHexCode } = require("common");
 const { ForbiddenError, NotAuthenticatedError, ErrorCodes } = require("common");
+const { hashString } = require("common");
 
 class ApiManager {
   constructor(request, options) {
@@ -24,6 +25,7 @@ class ApiManager {
     this.doCheckout = options.doCheckout;
     this.crudType = options.crudType;
     this.session = request.session;
+    this.session.requestId = this.requestId;
     this.auth = request.auth;
     this.ROLES = this.auth?.ROLES ?? {};
     this.bodyParams = request.inputData ?? request.body;
@@ -157,8 +159,6 @@ class ApiManager {
   async fetchBefore() {}
   async fetchAfter() {}
   async fetchInstance() {}
-  async fetchObjectRightsBefore() {}
-  async fetchObjectRightsAfter() {}
   async addToOutput() {}
   async setLayer1Variables() {}
   async setLayer2Variables() {}
@@ -188,8 +188,6 @@ class ApiManager {
   async authorizeSharedAccess() {
     return false;
   }
-  async doObjectRightChecksBefore() {}
-  async doObjectRightChecksAfter() {}
 
   async checkShareToken() {
     if (this.shareToken) {
@@ -231,17 +229,6 @@ class ApiManager {
     // implement in subclasses
   }
 
-  checkObjectRights(objectRights, check) {
-    if (!objectRights || objectRights.length === 0) return false;
-    if (check === true || check === null || check.length === 0) {
-      return objectRights && objectRights.length;
-    } else if (Array.isArray(check)) {
-      return objectRights.some((r) => check.includes(r));
-    } else {
-      return objectRights.includes(check);
-    }
-  }
-
   async execute() {
     this.startTime = Date.now();
     await this.checkValidLogin();
@@ -266,7 +253,6 @@ class ApiManager {
 
   async executeLayer2() {
     await this.fetchBefore();
-    await this.fetchObjectRightsBefore();
     // layer2: validations that need early fetches
     await this.setLayer2Variables();
     await this.checkLayer2Auth();
@@ -284,7 +270,6 @@ class ApiManager {
       await this.fetchInstance();
     }
     this.setOwnership();
-    await this.fetchObjectRightsAfter();
     // layer3: validations that need instance item
     await this.setLayer3Variables();
     await this.checkLayer3Auth();
@@ -337,13 +322,11 @@ class ApiManager {
 
   async checkLayer2Auth() {
     if (this.checkAbsolute() == true) return;
-    await this.doObjectRightChecksBefore();
     await this.checkLayer2AuthValidations();
   }
 
   async checkLayer3Auth() {
     if (this.checkAbsolute() === true) return;
-    await this.doObjectRightChecksAfter();
     await this.checkLayer3AuthValidations();
   }
 
@@ -411,6 +394,11 @@ class ApiManager {
   }
 
   checkoutUpdated(status) {}
+
+  // utility functions to access from scripts
+  hashString(strValue) {
+    return hashString(strValue);
+  }
 }
 
 module.exports = ApiManager;

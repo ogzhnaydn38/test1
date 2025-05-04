@@ -44,7 +44,8 @@
     "swagger-ui-express": "*",
     "stripe": "*",
     "object-hash": "*",
-    "module-alias": "*"
+    "module-alias": "*",
+    "node-cron": "*"
   },
   "_moduleAliases": {
     "common": "src/common",

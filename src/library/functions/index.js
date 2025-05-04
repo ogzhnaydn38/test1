@@ -1,4 +1,5 @@
 module.exports = {
   sortVersions: require("./sortVersions.js"),
-  capitalizeFirstLetter: require("./functions/capitalizeFirstLetter.js"),
+  capitalizeFirstLetter: require("./capitalizeFirstLetter.js"),
+  getDayOfWeek: require("./getDayOfWeek.js"),
 };

@@ -110,6 +110,7 @@ class DBUpdateCommand extends DbCommand {
           this.dbEvent,
           await this.getEventPayload(),
           this.session,
+          this.requestId,
         );
         await publisher.publish();
       } catch (err) {

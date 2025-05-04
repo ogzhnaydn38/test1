@@ -34,7 +34,12 @@ const { ElasticIndexer } = require("serviceCommon");
 
 const { startKafkaListeners } = require("./controllers-layer/kafka-layer");
 
-const { initService, getPublicKey, setCurrentKeyId } = require("utils");
+const {
+  initService,
+  getPublicKey,
+  setCurrentKeyId,
+  startRepairElastic,
+} = require("utils");
 
 let processActive = false;
 let expressServer = null;
@@ -88,6 +93,8 @@ const start = async () => {
   await initService();
 
   await updateElasticIndexMappings();
+
+  await startRepairElastic();
 
   const expressApp = require("./express-app");
   const servicePort = process.env.HTTP_PORT ?? 3000;

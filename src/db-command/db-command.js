@@ -14,6 +14,7 @@ class DbCommand {
       );
     }
     this.session = input.session;
+    this.requestId = input.requestId;
     this.auth = input.auth;
     this.commandName = commandName;
     this.whereClause = null;
@@ -55,7 +56,9 @@ class DbCommand {
   }
 
   readFromSession(readParam) {
-    return this.session ? this.session[readParam] : null;
+    return this.session && this.session.hasOwnProperty(readParam)
+      ? this.session[readParam]
+      : null;
   }
 
   initOwnership(input) {
@@ -153,6 +156,7 @@ class DbCommand {
           this.dbEvent,
           this.dbData,
           this.session,
+          this.requestId,
         );
         publisher.publish();
       } catch (err) {

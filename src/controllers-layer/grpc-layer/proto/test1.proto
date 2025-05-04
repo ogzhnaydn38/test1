@@ -7,6 +7,23 @@ import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 
 
+message test {
+    string id = 1;
+    string name = 2;
+}
+
+
+message testmember {
+    string id = 1;
+    string userId = 2;
+    string objectId = 3;
+    string roleName = 4;
+    bool suspended = 5;
+}
+
+
+
+
 
 
 
@@ -21,6 +38,8 @@ message HelloMessageReply {
 }
 
 service test1Service {
+
+
 
 
     rpc currentUser(VoidRequest) returns (CurrentUserReply);

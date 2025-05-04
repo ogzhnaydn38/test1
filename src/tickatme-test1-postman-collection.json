@@ -3,5 +3,62 @@
     "name": "tickatme-test1-service API",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
-  "item": []
+  "item": [
+    {
+      "name": "get-test",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "ExampleValue",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{serviceUrl}}//tests/:testId",
+          "host": [
+            "{{serviceUrl}}"
+          ],
+          "path": [
+            "tests",
+            ":testId"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get-usertest",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "ExampleValue",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{serviceUrl}}//usertests/:testId",
+          "host": [
+            "{{serviceUrl}}"
+          ],
+          "path": [
+            "usertests",
+            ":testId"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
 }

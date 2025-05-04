@@ -35,8 +35,19 @@ app.use(cookieParser());
 
 const servicePort = process.env.HTTP_PORT ?? 3000;
 const corsOrigin = process.env.CORS_ORIGIN;
+const exposedHeaders = [
+  "tickatme-access-token",
+  "tickatme-refresh-token",
+  "set-cookie",
+];
 if (!corsOrigin) {
-  app.use(cors());
+  app.use(
+    cors({
+      origin: (o, cb) => cb(null, true),
+      credentials: true,
+      exposedHeaders,
+    }),
+  );
 } else {
   const origins = [corsOrigin];
   const corsLocalPortStart = 5170;
@@ -44,7 +55,6 @@ if (!corsOrigin) {
   for (let prtNbr = corsLocalPortStart; prtNbr <= corsLocalPortEnd; prtNbr++) {
     origins.push(`http://localhost:${prtNbr}`);
   }
-  const exposedHeaders = ["tickatme-access-token", "tickatme-refresh-token"];
   app.use(cors({ origin: origins, credentials: true, exposedHeaders }));
 }
 
@@ -75,7 +85,12 @@ app.use("", edgeRouter);
 
 const {
   // main Database Crud Object Rest Api Routers
+  testRouter,
+  testmemberRouter,
 } = require("restLayer");
+
+app.use("", testRouter);
+app.use("", testmemberRouter);
 
 // swagger
 

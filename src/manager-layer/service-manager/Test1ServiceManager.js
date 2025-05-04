@@ -5,6 +5,25 @@ class Test1ServiceManager extends ApiManager {
     super(request, options);
   }
 
+  getMembershipOfTest = async (userId, objectId) => {
+    // Get the membership of the user for the %= membership.mainObjectName  object from db
+
+    const { getTestmemberByQuery } = require("dbLayer");
+    const { convertUserQueryToSequelizeQuery } = require("common");
+
+    const statusCheck = { suspended: false };
+    const query = {
+      $and: [
+        statusCheck,
+        { userId: userId, objectId: objectId, isActive: true },
+      ],
+    };
+
+    const dbQuery = convertUserQueryToSequelizeQuery(query);
+    const membership = await getTestmemberByQuery(dbQuery);
+    return membership;
+  };
+
   parametersToJson(jsonObj) {
     super.parametersToJson(jsonObj);
   }
