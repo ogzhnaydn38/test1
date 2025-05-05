@@ -11,12 +11,97 @@ module.exports = (app) => {
     brand: {
       name: "tickatme",
       image: "https://mindbricks.com/images/logo-light.svg",
-      moduleName: "bff",
+      moduleName: "test1",
     },
     auth: {
       url: authUrl,
     },
-    dataObjects: [],
+    dataObjects: [
+      {
+        name: "Test",
+        description: "",
+        reference: {
+          tableName: "test",
+          properties: [
+            {
+              name: "name",
+              type: "String",
+            },
+          ],
+        },
+        endpoints: [
+          {
+            isAuth: true,
+            method: "GET",
+            url: "/tests/{testId}",
+            title: "getTest",
+            query: [],
+            body: {
+              type: "json",
+              content: {},
+            },
+            parameters: [
+              {
+                key: "testId",
+                value: "",
+                description: "",
+              },
+            ],
+            headers: [],
+          },
+
+          {
+            isAuth: true,
+            method: "GET",
+            url: "/usertests/{testId}",
+            title: "getUserTest",
+            query: [],
+            body: {
+              type: "json",
+              content: {},
+            },
+            parameters: [
+              {
+                key: "testId",
+                value: "",
+                description: "",
+              },
+            ],
+            headers: [],
+          },
+        ],
+      },
+
+      {
+        name: "Testmember",
+        description: "",
+        reference: {
+          tableName: "testmember",
+          properties: [
+            {
+              name: "userId",
+              type: "ID",
+            },
+
+            {
+              name: "objectId",
+              type: "ID",
+            },
+
+            {
+              name: "roleName",
+              type: "String",
+            },
+
+            {
+              name: "suspended",
+              type: "Boolean",
+            },
+          ],
+        },
+        endpoints: [],
+      },
+    ],
   };
 
   inject(app, config);
