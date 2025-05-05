@@ -40,6 +40,7 @@
     "nodemailer": "*",
     "nodemailer-smtp-transport": "*",
     "bcryptjs": "*",
+    "mindbricks-api-face": "*",
     "simple-oauth2": "*",
     "swagger-ui-express": "*",
     "stripe": "*",

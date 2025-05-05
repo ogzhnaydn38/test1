@@ -9,6 +9,7 @@ const {
 } = require("common");
 const path = require("path");
 const fs = require("fs");
+const apiFace = require("./api-face");
 
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger.json");
@@ -120,6 +121,9 @@ const forwardSwagger = async (req, res, next) => {
   req.swaggerDoc = swaggerDocument;
   next();
 };
+
+// Add api face to the app
+apiFace(app);
 
 app.use(
   "/swagger",
