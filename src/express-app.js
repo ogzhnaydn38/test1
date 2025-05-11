@@ -155,7 +155,7 @@ app.get("/getPostmanCollection", (req, res) => {
 const loadMenu = (req) => {
   const fs = require("fs");
   const loginInfo = req.session
-    ? `<p>Logged in as: ${req.session.email}</p>`
+    ? `<p id="loginInfo">Logged in as: ${req.session.email} \n <a href="#" onclick="logout()">Logout</a></p>`
     : `<p>-- No login found --</p>`;
   const data = fs.readFileSync(path.join(__dirname, "welcome.html"), "utf8");
   return data.replace("$loginInfo", loginInfo);

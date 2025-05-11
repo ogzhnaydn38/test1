@@ -102,7 +102,7 @@ const createPaymentGate = async (gateName, gateConfig, checkoutInfo) => {
   const checkoutName = checkoutInfo.checkoutName;
   const GateClass = registeredGates[gateName];
   const paymentGate = GateClass
-    ? new GateClass(gateConfig, checkoutInfo)
+    ? new PaymentGate(gateName, gateConfig, checkoutInfo)
     : null;
   paymentGatePool[checkoutName] = paymentGate;
   return paymentGate;

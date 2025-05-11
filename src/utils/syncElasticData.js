@@ -1,7 +1,7 @@
 const { getTestById } = require("dbLayer");
 const { getTestmemberById } = require("dbLayer");
-const Test = require("models");
-const Testmember = require("models");
+const { Test } = require("models");
+const { Testmember } = require("models");
 const path = require("path");
 const fs = require("fs");
 const { ElasticIndexer } = require("serviceCommon");

@@ -15,7 +15,7 @@ const isValidObjectId = (oid) => {
 };
 
 const isValidUUID = (uuid) => {
-  if (typeof uuid !== "string") return uuid;
+  if (typeof uuid !== "string") return false;
   if (!uuid) return false;
   const suuid = shortUUID(uuid);
   if (suuid.length !== 32) return false;

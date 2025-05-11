@@ -6,12 +6,12 @@ const { hexaLogger } = require("common");
 
 const getTestListByQuery = async (query) => {
   try {
-    const test = await Test.findAll({ where: query });
     if (!query || typeof query !== "object") {
       throw new BadRequestError(
         "Invalid query provided. Query must be an object.",
       );
     }
+    const test = await Test.findAll({ where: query });
     if (!test) return [];
     return test.map((item) => item.getData());
   } catch (err) {

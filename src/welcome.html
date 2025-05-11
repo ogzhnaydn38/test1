@@ -50,6 +50,26 @@
       }
     </style>
   </head>
+  <script>
+    async function logout() {
+      try {
+        const response = await fetch("/logout", {
+          method: "POST",
+          credentials: "include", // to send cookies if necessary
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        if (response.ok) {
+          window.location.href = "/login"; // redirect to login or home
+        } else {
+          alert("Logout failed");
+        }
+      } catch (err) {
+        console.error("Logout error:", err);
+      }
+    }
+  </script>
   <body>
     <div class="container">
       <h1>Welcome to tickatme-test1 Service</h1>

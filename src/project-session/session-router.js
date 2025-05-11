@@ -123,6 +123,11 @@ const addLoginRoutes = () => {
     loginSession.loginUserController(req, res, next);
   });
 
+  router.post("/logout", (req, res, next) => {
+    const loginSession = createSession();
+    loginSession.logoutUserController(req, res, next);
+  });
+
   router.get("/publickey", (req, res, next) => {
     const fs = require("fs");
     keyFolderName = process.env.KEYS_FOLDER ?? "keys";

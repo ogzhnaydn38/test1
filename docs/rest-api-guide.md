@@ -277,11 +277,14 @@ _Default access route_ : _GET_ `/usertests/:testId`
 
 #### Parameters
 
-The get-usertest api has got 1 parameter
+The get-usertest api has got 4 parameters
 
-| Parameter | Type | Required | Population             |
-| --------- | ---- | -------- | ---------------------- |
-| testId    | ID   | true     | request.params?.testId |
+| Parameter   | Type | Required | Population                |
+| ----------- | ---- | -------- | ------------------------- |
+| userChild   |      | false    | request.body?.userChild   |
+| userCourses |      | false    | request.body?.userCourses |
+| account     |      | false    | request.body?.account     |
+| testId      | ID   | true     | request.params?.testId    |
 
 To access the api you can use the **REST** controller with the path **GET /usertests/:testId**
 
@@ -289,7 +292,11 @@ To access the api you can use the **REST** controller with the path **GET /usert
 axios({
   method: "GET",
   url: `/usertests/${testId}`,
-  data: {},
+  data: {
+    userChild: "null",
+    userCourses: "null",
+    account: "null",
+  },
   params: {},
 });
 ```
@@ -297,6 +304,8 @@ axios({
 The API response is encapsulated within a JSON envelope. Successful operations return an HTTP status code of 200 for get, getlist, update, or delete requests, and 201 for create requests. Each successful response includes a `"status": "OK"` property. For error handling, refer to the "Error Response" section.
 
 Following JSON represents the most comprehensive form of the **`test`** object in the respones. However, some properties may be omitted based on the object's internal logic.
+
+Given that this get route features shortcuts for creating or updating child objects, the response will also encompass the outcomes of these child operations. It's important to note, though, that this includes only newly created or updated children. For a comprehensive list of all child objects, please utilize a corresponding GET route.
 
 ```json
 {

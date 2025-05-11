@@ -103,12 +103,17 @@ class QueryCacheInvalidator {
 
   #delDataFromCacheByKeyPattern = async (keyPattern) => {
     let result = 0;
-    for await (const key of redisClient.scanIterator({
-      MATCH: keyPattern,
-    })) {
-      await redisClient.del(key);
-      result++;
+    try {
+      for await (const key of redisClient.scanIterator({
+        MATCH: keyPattern,
+      })) {
+        await redisClient.del(key);
+        result++;
+      }
+    } catch (error) {
+      console.error("Error deleting keys In QueryCache:", error.message);
     }
+
     return result;
   };
 

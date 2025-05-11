@@ -98,7 +98,7 @@ const ElasticQueryBuilders = {
 };
 
 const buildSequelizeClause = (name, op, value, boolValue) => {
-  const sOp = null;
+  let sOp = null;
 
   if (op == "nin") {
     sOp = Op.notIn;
@@ -146,7 +146,7 @@ const buildElasticClause = (name, op, value, boolValue) => {
     notOp = false;
   }
 
-  const query = new ElasticQueryBuilder(propName, op, value).build();
+  const query = new ElasticQueryBuilder(name, op, value).build();
 
   return notOp ? { bool: { must_not: query } } : query;
 };

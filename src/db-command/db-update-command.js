@@ -193,16 +193,16 @@ class DBUpdateSequelizeCommand extends DBUpdateCommand {
 
     this.emptyUpdate = !this.dataClause || !Object.keys(this.dataClause).length;
 
-    if (this.emptyUpdate) {
-      throw new BadRequestError(
-        "errMsg_emptyUpdateClauseIsNotAllowedInBulkMode",
-      );
-    }
     if (this.emptyUpdate && !(this.isBulk && this.updateEach)) {
-      // empty update cab ne used only in single update mode and updateEachMode with itemClause
+      // empty update can ne used only in single update mode and updateEachMode with itemClause
       dbDoc = await this.dbModel.findOne({ where: whereClause });
       if (Array.isArray(dbDoc)) dbDoc = dbDoc[0];
       this.dbData = dbDoc ? dbDoc.getData() : null;
+    } else if (this.emptyUpdate) {
+      // empty update can ne used only in single update mode and updateEachMode with itemClause
+      throw new BadRequestError(
+        "errMsg_emptyUpdateClauseIsNotAllowedInBulkMode",
+      );
     }
 
     if (this.isBulk && !this.updateEach) {

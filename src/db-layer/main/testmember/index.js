@@ -10,5 +10,7 @@ module.exports = {
   getTestmemberByQuery: utils.getTestmemberByQuery,
   updateTestmemberById: utils.updateTestmemberById,
   updateTestmemberByIdList: utils.updateTestmemberByIdList,
+  updateTestmemberByQuery: utils.updateTestmemberByQuery,
   deleteTestmemberById: utils.deleteTestmemberById,
+  deleteTestmemberByQuery: utils.deleteTestmemberByQuery,
 };

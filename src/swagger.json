@@ -153,7 +153,7 @@
         "tags": [
           "test"
         ],
-        "summary": "The get-usertest API has 1 parameter.",
+        "summary": "The get-usertest API has 4 parameters.",
         "description": "get-usertest",
         "parameters": [
           {
@@ -325,7 +325,20 @@
       },
       "get-usertest": {
         "type": "object",
-        "properties": {},
+        "properties": {
+          "userChild": {
+            "type": "string",
+            "nullable": true
+          },
+          "userCourses": {
+            "type": "string",
+            "nullable": true
+          },
+          "account": {
+            "type": "string",
+            "nullable": true
+          }
+        },
         "additionalProperties": false
       },
       "get-test-Response": {

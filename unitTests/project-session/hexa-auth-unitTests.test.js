@@ -202,6 +202,11 @@ describe("HexaAuth", () => {
       const req = {
         headers: { cookie: "mindbricks-test-token=xyz" },
       };
+
+      sinon
+        .stub(auth, "checkTokenLocations")
+        .resolves(["xyz", true, "cookie", "mindbricks-test-token"]);
+
       const [token, isTest] = await auth.extractSessionToken(req);
       expect(token).to.equal("xyz");
       expect(isTest).to.be.true;

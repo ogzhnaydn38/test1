@@ -115,7 +115,7 @@ class GetTestManager extends TestManager {
   async getWhereClause() {
     const { convertUserQueryToSequelizeQuery } = require("common");
 
-    const routeQuery = this.getRouteQuery();
+    const routeQuery = await this.getRouteQuery();
 
     return convertUserQueryToSequelizeQuery(routeQuery);
   }

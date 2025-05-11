@@ -14,7 +14,9 @@ module.exports = {
   getTestByQuery: mainFunctions.getTestByQuery,
   updateTestById: mainFunctions.updateTestById,
   updateTestByIdList: mainFunctions.updateTestByIdList,
+  updateTestByQuery: mainFunctions.updateTestByQuery,
   deleteTestById: mainFunctions.deleteTestById,
+  deleteTestByQuery: mainFunctions.deleteTestByQuery,
   // Testmember Db Object
   createTestmember: mainFunctions.createTestmember,
   getIdListOfTestmemberByField: mainFunctions.getIdListOfTestmemberByField,
@@ -25,5 +27,7 @@ module.exports = {
   getTestmemberByQuery: mainFunctions.getTestmemberByQuery,
   updateTestmemberById: mainFunctions.updateTestmemberById,
   updateTestmemberByIdList: mainFunctions.updateTestmemberByIdList,
+  updateTestmemberByQuery: mainFunctions.updateTestmemberByQuery,
   deleteTestmemberById: mainFunctions.deleteTestmemberById,
+  deleteTestmemberByQuery: mainFunctions.deleteTestmemberByQuery,
 };

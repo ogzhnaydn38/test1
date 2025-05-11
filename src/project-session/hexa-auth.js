@@ -120,6 +120,15 @@ class HexaAuth {
     await setRedisData(userAuthUpdateKey, "false", 60 * 60 * 24 * days);
   }
 
+  async deleteSessionFromEntityCache(sessionId) {
+    const sessionKey = "hexasession:" + sessionId;
+    const userKey = "hexasessionid:" + sessionId;
+    const userAuthUpdateKey = "hexauserauthupdate:" + sessionId;
+    await redisClient.del(sessionKey);
+    await redisClient.del(userKey);
+    await redisClient.del(userAuthUpdateKey);
+  }
+
   async getSessionFromEntityCache(sessionId) {
     const session = await getRedisData("hexasession:" + sessionId);
 
@@ -239,25 +248,6 @@ class HexaAuth {
       this.tokenLocation = "bearer";
       this.tokenName = "";
       console.log("Token extracted:", this.tokenLocation, sessionToken);
-    }
-    if (sessionToken) return [sessionToken, isTestToken];
-
-    // check if there is any test token
-    sessionToken = this.getCookieToken(
-      this.projectCodename + "-test-token",
-      req,
-    );
-    if (sessionToken) {
-      isTestToken = true;
-      this.accessToken = sessionToken;
-      this.tokenLocation = "cookie";
-      this.tokenName = this.projectCodename + "-test-token";
-      console.log(
-        "Test Token extracted:",
-        this.tokenLocation,
-        this.tokenName,
-        sessionToken,
-      );
     }
     if (sessionToken) return [sessionToken, isTestToken];
 

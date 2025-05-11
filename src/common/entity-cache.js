@@ -1,4 +1,4 @@
-const { redisClient } = require("./redis");
+const { redisClient, setRedisData, getRedisData } = require("./redis");
 class EntityCache {
   constructor(entityName, indexFields) {
     this.entityName = entityName;
@@ -53,22 +53,24 @@ class EntityCache {
   }
 
   async delEntityFromCache(entityId) {
-    if (!entityId) entityId = this.defaultId;
-    const key = this.#buildKey(entityId);
-    const result = await redisClient.del(key);
+    try {
+      if (!entityId) entityId = this.defaultId;
 
-    const indexListKey = this.#buildIndexListKey(entityId);
-    const indexKeys = await redisClient.sMembers(indexListKey);
-    await redisClient.del(indexListKey);
+      const key = this.#buildKey(entityId);
+      await redisClient.del(key);
 
-    const commands = [];
-    for (const indexKey of indexKeys) {
-      commands.push(redisClient.sRem(indexKey, entityId));
+      const indexListKey = this.#buildIndexListKey(entityId);
+      const indexKeys = await redisClient.sMembers(indexListKey);
+      await redisClient.del(indexListKey);
+
+      const commands = [];
+      for (const indexKey of indexKeys) {
+        commands.push(redisClient.sRem(indexKey, entityId));
+      }
+      await Promise.all(commands);
+    } catch (error) {
+      console.error("Error deleting entity from cache:", error.message);
     }
-
-    await Promise.all(commands);
-
-    return result;
   }
 
   async getEntityFromCache(entityId) {

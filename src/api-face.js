@@ -36,10 +36,7 @@ module.exports = (app) => {
             url: "/tests/{testId}",
             title: "getTest",
             query: [],
-            body: {
-              type: "json",
-              content: {},
-            },
+
             parameters: [
               {
                 key: "testId",
@@ -56,10 +53,7 @@ module.exports = (app) => {
             url: "/usertests/{testId}",
             title: "getUserTest",
             query: [],
-            body: {
-              type: "json",
-              content: {},
-            },
+
             parameters: [
               {
                 key: "testId",

@@ -28,10 +28,16 @@ class GetUsertestManager extends TestManager {
 
   parametersToJson(jsonObj) {
     super.parametersToJson(jsonObj);
+    jsonObj.userChild = this.userChild;
+    jsonObj.userCourses = this.userCourses;
+    jsonObj.account = this.account;
     jsonObj.testId = this.testId;
   }
 
   readRestParameters(request) {
+    this.userChild = request.body?.userChild;
+    this.userCourses = request.body?.userCourses;
+    this.account = request.body?.account;
     this.testId = request.params?.testId;
     this.requestData = request.body;
     this.queryData = request.query ?? {};
@@ -80,9 +86,72 @@ class GetUsertestManager extends TestManager {
   async getWhereClause() {
     const { convertUserQueryToSequelizeQuery } = require("common");
 
-    const routeQuery = this.getRouteQuery();
+    const routeQuery = await this.getRouteQuery();
 
     return convertUserQueryToSequelizeQuery(routeQuery);
+  }
+
+  async executeAggregatedCruds() {
+    this.userChild = await this.executeAggregatedCrudUserChild();
+    this.userCourses = await this.executeAggregatedCrudUserCourses();
+    this.updateAccount = await this.executeAggregatedCrudUpdateAccount();
+    this.deleteOldAccount = await this.executeAggregatedCrudDeleteOldAccount();
+  }
+
+  async executeAggregatedCrudUserChild() {
+    // Aggregated Create Operation on Testmember
+    const { createTestmember } = require("dbLayer");
+    const params = {
+      childName: this.userChild.name,
+    };
+    return await createTestmember(params);
+  }
+
+  async executeAggregatedCrudUserCourses() {
+    // Aggregated Create Operation on Testmember
+    const { createTestmember } = require("dbLayer");
+    const sourceData =
+      this.userCourses && Array.isArray(this.userCourses)
+        ? this.userCourses
+        : [];
+    const userCourses = [];
+    for (const crudItem of sourceData) {
+      const params = {
+        courseName: crudItem.courseName,
+      };
+      userCourses.push(await createTestmember(params));
+    }
+    return userCourses;
+  }
+
+  async executeAggregatedCrudUpdateAccount() {
+    // Aggregated Update Operation on Testmember
+    const { updateTestmemberByQuery } = require("dbLayer");
+    const params = {
+      balance: this.account.balance,
+    };
+    const userQuery = { accountId: this.account.id };
+
+    const { convertUserQueryToSequelizeQuery } = require("common");
+    const query = convertUserQueryToSequelizeQuery(userQuery);
+    return await updateTestmemberByQuery(params, query);
+  }
+
+  async executeAggregatedCrudDeleteOldAccount() {
+    // Aggregated Delete Operation on Testmember
+    const { deleteTestmemberByQuery } = require("dbLayer");
+    const userQuery = { id: this.account.oldAccountId };
+
+    const { convertUserQueryToSequelizeQuery } = require("common");
+    const query = convertUserQueryToSequelizeQuery(userQuery);
+    return await deleteTestmemberByQuery(query);
+  }
+
+  async addToOutput() {
+    this.output.userChild = this.userChild;
+    this.output.userCourses = this.userCourses;
+    this.output.updateAccount = this.updateAccount;
+    this.output.deleteOldAccount = this.deleteOldAccount;
   }
 }
 

@@ -385,7 +385,12 @@ class ElasticIndexer {
             this.indexName,
         );
       }
-    } catch (err) {}
+    } catch (err) {
+      console.log(
+        "Can not delete redis cache for elasticCache:" + this.indexName,
+        err.message,
+      );
+    }
 
     return result;
   }

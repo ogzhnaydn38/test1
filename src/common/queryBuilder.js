@@ -819,12 +819,12 @@ convertToSystemQuery = (query, platform) => {
 
 const convertUserQueryToElasticQuery = (userQuery) => {
   let mQuery = convertToSystemQuery(userQuery, ElasticExpressions);
-  return mQuery.build();
+  return mQuery ? mQuery.build() : null;
 };
 
 const convertUserQueryToSequelizeQuery = (userQuery) => {
   let mQuery = convertToSystemQuery(userQuery, SequelizeExpressions);
-  return mQuery.build();
+  return mQuery ? mQuery.build() : null;
 };
 
 const convertUserQueryToMongoDbQuery = (userQuery) => {

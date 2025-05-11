@@ -19,7 +19,7 @@ class KafkaListener extends HexaListener {
       const session = listenerData.session;
       const sessionId = session?.sessionId;
 
-      hexaLogger.inserInfo(
+      hexaLogger.insertInfo(
         "EventSessionRetrieved",
         { sessionId: sessionId },
         "kafka-listener.js->eachMessage",
@@ -32,7 +32,7 @@ class KafkaListener extends HexaListener {
         listenerData,
         this.callBackData,
       );
-
+      const data = {};
       data[topic] = listenerData;
 
       let isProcessed = true;

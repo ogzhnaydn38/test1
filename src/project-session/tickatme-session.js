@@ -46,26 +46,28 @@ class TickatmeSession extends HexaAuth {
 
     sessionToken = req.query["access_token"];
     if (sessionToken) {
-      console.log("Tenant Token extracted:", "query", "access_token");
+      console.log("Token extracted:", "query", "access_token");
       return [sessionToken, false, "query", "access_token"];
     }
 
     sessionToken = this.getBearerToken(req);
     if (sessionToken) {
-      console.log("Tenant Token extracted:", "bearer");
+      console.log("Token extracted:", "bearer");
       return [sessionToken, false, "bearer"];
     }
 
     // check if there is any header of the application
     sessionToken = req.headers["tickatme-access-token"];
     if (sessionToken) {
-      console.log("Tenant Token extracted:", "header", "tickatme-access-token");
+      console.log("Token extracted:", "header", "tickatme-access-token");
       return [sessionToken, false, "header", "tickatme-access-token"];
     }
 
     sessionToken = this.getCookieToken("tickatme-access-token", req);
     if (sessionToken) {
-      console.log("Tenant Token extracted:", "cookie", "tickatme-access-token");
+      console.log("Token extracted:", "cookie", "tickatme-access-token");
+      this.currentCookieName = "tickatme-access-token";
+      console.log("Cookie name:", this.currentCookieName);
       return [sessionToken, false, "cookie", "tickatme-access-token"];
     }
 

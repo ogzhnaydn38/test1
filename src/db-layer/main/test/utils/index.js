@@ -8,5 +8,7 @@ module.exports = {
   getTestByQuery: require("./getTestByQuery"),
   updateTestById: require("./updateTestById"),
   updateTestByIdList: require("./updateTestByIdList"),
+  updateTestByQuery: require("./updateTestByQuery"),
   deleteTestById: require("./deleteTestById"),
+  deleteTestByQuery: require("./deleteTestByQuery"),
 };
